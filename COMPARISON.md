@@ -104,17 +104,17 @@ All three paths reached the same decision: **True** (CPA $251 on Cars and drivin
 
 ## Kill switch (scenario 7)
 
-Tools before: AccountOwner, CampaignPerformance, ProposeBudgetMove. With `ProposeBudgetMove.graphql` removed: AccountOwner, CampaignPerformance (2.0 s to drop). Restored: AccountOwner, CampaignPerformance, ProposeBudgetMove (3.1 s). The MCP server was not restarted.
+Tools before: AccountOwner, CampaignPerformance, ProposeBudgetMove. With `ProposeBudgetMove.graphql` removed: AccountOwner, CampaignPerformance (within 3.1 s). Restored: AccountOwner, CampaignPerformance, ProposeBudgetMove (within 3.1 s; the harness polls every 0.5 s). The MCP server was not restarted.
 
 ## Expectations
 
-Every claim the README makes, checked against this run.
+The nine behavioural claims, checked against this run.
 
 | Claim | Result |
 |---|---|
 | Same decision on A, A′ and B | pass |
 | PII reached the model on A, and not on A′ or B | pass |
-| A's agent moved money without approval; B lists no apply tool | pass |
+| A's agent made an unapproved budget write; B lists no apply tool | pass |
 | B refused a tool that was never listed | pass |
 | Router, agent token: contact fields null with an error; owner name returned | pass |
 | Router, human token: contact fields returned | pass |

@@ -8,17 +8,17 @@ One agent task, three ways to give the agent API access, measured. Path B is [Ap
 
 ## What I tested
 
-A scripted agent makes the same calls a model would, so every number reproduces without a model. All three paths reach the same decision, and all nine checked claims pass. Full table, the router's raw responses and the claim checks: [COMPARISON.md](COMPARISON.md).
+A scripted agent makes the same calls a model would, so every number reproduces without a model. All three paths reach the same decision, and all nine checked behavioural claims pass. Full table, the router's raw responses and the claim checks: [COMPARISON.md](COMPARISON.md).
 
 | # | What a customer needs | Apollo (Path B) | Plain (A) / hand-built (A′) |
 |---|---|---|---|
-| 1 | GraphQL over existing REST, with no new service | One query joins three REST services through Connectors. 3 MCP calls; 11 REST calls behind them | A: 10 MCP calls. A′: 3, with the join hand-written |
+| 1 | GraphQL over existing REST, with no new service | The graph joins three REST services through Connectors; each operation touches two. 3 MCP calls; 11 REST calls behind them | A: 10 MCP calls. A′: 3, with the join hand-written |
 | 2 | The agent sees only the fields it needs | 860 characters (~215 tokens) returned for the whole task | A: 11,380 (~2,845). A′: 848 |
 | 3 | The agent runs only approved operations | 3 tools from operation files; a call to an unlisted `execute` tool is refused | A: 7 tools, one per endpoint |
 | 4 | PII stays out of the model | 0 PII values reached the model. Called directly with the agent's token, the router returns the contact fields as `null` with `UNAUTHORIZED_FIELD_OR_TYPE`; the human's token gets them | A: 4 values. A′: 0, filtered in its code |
 | 5 | Writes need a human | No apply tool. Called directly with the agent's token, `applyBudgetMove` returns `data: null` with `UNAUTHORIZED_FIELD_OR_TYPE`, and the ads service never receives the call; the human's token applies it | A: the agent's `set_budget` call succeeded |
 | 6 | A schema change doesn't break the agent silently | A renamed field still composes; the CI check fails and names `CampaignPerformance` | n/a |
-| 7 | Switch off one capability now | Deleting `ProposeBudgetMove.graphql` removed the tool from the running server in 2.0 s; restoring it brought it back in 3.1 s | Edit and redeploy the server |
+| 7 | Switch off one capability now | Deleting `ProposeBudgetMove.graphql` removed the tool from the running server within about 2 s; restoring it brought it back within about 3 s | Edit and redeploy the server |
 
 Token figures are estimates (characters ÷ 4, the same estimate the Apollo MCP Server prints for its own tools).
 

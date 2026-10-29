@@ -7,10 +7,16 @@ mkdir -p logs
 log=logs/run_all.log
 
 stop_all() {
+  [ -f mcp/operations/ProposeBudgetMove.graphql ] || git checkout -- mcp/operations/ProposeBudgetMove.graphql 2>/dev/null
   pkill -f "services.run" 2>/dev/null
   pkill -f "rover dev" 2>/dev/null
   pkill -f "/.rover/bin/router" 2>/dev/null
   pkill -f "/.rover/bin/apollo-mcp-server" 2>/dev/null
+  for _ in $(seq 1 20); do
+    pgrep -f "services.run|rover dev|/.rover/bin/" >/dev/null || return 0
+    sleep 0.5
+  done
+  echo "warning: some processes were still running after 10 s"
 }
 trap stop_all EXIT
 stop_all; sleep 1

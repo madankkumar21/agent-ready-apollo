@@ -54,11 +54,11 @@ def main():
     if ks:
         lines += ["## Kill switch (scenario 7)", "",
                   f"Tools before: {', '.join(ks['before'])}. With `ProposeBudgetMove.graphql` removed: {', '.join(ks['during'])} "
-                  f"({ks['seconds_to_remove']} s to drop). Restored: {', '.join(ks['after'])} ({ks['seconds_to_restore']} s). "
+                  f"(within {ks['seconds_to_remove']} s). Restored: {', '.join(ks['after'])} (within {ks['seconds_to_restore']} s; the harness polls every 0.5 s). "
                   "The MCP server was not restarted.", ""]
     exp = r.get("expectations") or []
     if exp:
-        lines += ["## Expectations", "", "Every claim the README makes, checked against this run.", "",
+        lines += ["## Expectations", "", "The nine behavioural claims, checked against this run.", "",
                   "| Claim | Result |", "|---|---|"]
         lines += [f"| {e['claim']} | {'pass' if e['pass'] else '**FAIL**'} |" for e in exp]
         lines.append("")

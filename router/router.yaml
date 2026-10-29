@@ -2,7 +2,7 @@
 # router features: they need APOLLO_KEY and APOLLO_GRAPH_REF from a GraphOS
 # account (the Free plan is enough). scripts/up.sh sets JWKS_URL.
 supergraph:
-  introspection: true          # for Sandbox while developing; the agent never reaches the router directly
+  introspection: true          # on for Sandbox during development; any caller with a valid token can read the schema
 authentication:
   router:
     jwt:

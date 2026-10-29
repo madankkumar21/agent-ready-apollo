@@ -20,3 +20,5 @@ headers:
   Authorization: "Bearer ${env.AGENT_TOKEN}"
 overrides:
   mutation_mode: explicit
+# Under `rover dev --mcp`, rover supplies the schema. Run standalone, add
+# schema: { source: local, path: <supergraph.graphql> }.

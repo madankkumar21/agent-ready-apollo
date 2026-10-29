@@ -1,7 +1,7 @@
 """Path A: a plain REST-to-MCP server, one tool per endpoint.
 
 This is the shape an OpenAPI-to-MCP generator produces, and the shape I built
-by hand at Coactive: each tool calls one REST endpoint and hands the model the
+by hand at an AI company: each tool calls one REST endpoint and hands the model the
 full response. The server holds one service credential, so every agent that
 connects can call every tool, including the one that moves money.
 

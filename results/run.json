@@ -148,6 +148,10 @@
           }
         ]
       },
+      "after_apply": {
+        "proposal_status": "pending",
+        "li4_budget": 20000
+      },
       "apply_reached_ads_service": false
     },
     "human": {
@@ -170,6 +174,10 @@
           }
         }
       },
+      "after_apply": {
+        "proposal_status": "applied",
+        "li4_budget": 19000.0
+      },
       "apply_reached_ads_service": true
     }
   },
@@ -188,7 +196,7 @@
       "CampaignPerformance",
       "ProposeBudgetMove"
     ],
-    "seconds_to_remove": 2.0,
+    "seconds_to_remove": 3.1,
     "seconds_to_restore": 3.1
   },
   "same_decision": true,
@@ -202,7 +210,7 @@
       "pass": true
     },
     {
-      "claim": "A's agent moved money without approval; B lists no apply tool",
+      "claim": "A's agent made an unapproved budget write; B lists no apply tool",
       "pass": true
     },
     {

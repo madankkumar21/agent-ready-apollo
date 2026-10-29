@@ -4,9 +4,9 @@ Advice for a team that wants an AI agent to read and act on data behind its exis
 
 ## 1. For one agent and one task, a hand-built tool is enough
 
-A purpose-built MCP server (Path A′) returned 848 characters to the model for the task, and the graph (Path B) returned 860. Both kept the PII out and gave the agent no way to move money. If you have one agent, one task and one team, write the tool by hand.
+A purpose-built MCP server (Path A′) returned 848 characters to the model for the task, and the graph (Path B) returned 860. Both kept the PII out and gave the agent no tool that writes a budget. If you have one agent, one task and one team, write the tool by hand.
 
-The plain approach of one tool per REST endpoint (Path A) is the one to avoid. The agent needed 10 calls instead of 3, the model received 11,380 characters, and four PII values reached it. The agent also moved money without approval, because `set_budget` was a tool.
+The plain approach of one tool per REST endpoint (Path A) is the one to avoid. The agent needed 10 calls instead of 3, the model received 11,380 characters, and four PII values reached it. The agent also made an unapproved budget write, because `set_budget` was a tool.
 
 ## 2. Use the graph when many clients need the same rules
 
