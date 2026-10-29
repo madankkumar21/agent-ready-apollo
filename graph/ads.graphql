@@ -1,0 +1,95 @@
+# Ads platform: campaigns, line items and budget proposals, mapped from its REST API.
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.11", import: ["@key", "@requiresScopes"])
+  @link(url: "https://specs.apollo.dev/connect/v0.2", import: ["@source", "@connect"])
+  @source(name: "ads", http: { baseURL: "http://127.0.0.1:4102" })
+
+type Campaign {
+  id: ID!
+  name: String
+  status: String
+  objective: String
+  advertiser: Advertiser
+  lineItems: [LineItem!]!
+    @connect(
+      source: "ads"
+      http: { GET: "/campaigns/{$this.id}/line-items" }
+      selection: """
+      id name status budget spend impressions clicks conversions
+      segment: { id: segmentId }
+      """
+    )
+}
+
+"One buy against one contextual segment. Money fields are in USD."
+type LineItem {
+  id: ID!
+  name: String
+  status: String
+  budget: Float
+  spend: Float
+  impressions: Int
+  clicks: Int
+  conversions: Int
+  segment: Segment
+}
+
+"A request to move budget between two line items. It moves nothing until a human applies it."
+type Proposal {
+  id: ID!
+  status: String
+  amount: Float
+  reason: String
+  fromLineItemId: ID
+  toLineItemId: ID
+}
+
+type Segment @key(fields: "id", resolvable: false) {
+  id: ID!
+}
+
+type Advertiser @key(fields: "id", resolvable: false) {
+  id: ID!
+}
+
+type Query {
+  campaign(id: ID!): Campaign
+    @requiresScopes(scopes: [["campaign:read"]])
+    @connect(
+      source: "ads"
+      http: { GET: "/campaigns/{$args.id}" }
+      selection: """
+      id name status objective
+      advertiser: { id: advertiserId }
+      """
+    )
+}
+
+type Mutation {
+  "Record a proposal. Moves no money."
+  proposeBudgetMove(campaignId: ID!, fromLineItemId: ID!, toLineItemId: ID!, amount: Float!, reason: String!): Proposal
+    @requiresScopes(scopes: [["proposal:write"]])
+    @connect(
+      source: "ads"
+      http: {
+        POST: "/proposals"
+        body: """
+        campaignId: $args.campaignId
+        fromLineItemId: $args.fromLineItemId
+        toLineItemId: $args.toLineItemId
+        amount: $args.amount
+        reason: $args.reason
+        """
+      }
+      selection: "id status amount reason fromLineItemId toLineItemId"
+    )
+
+  "Apply a pending proposal. This moves money, so it needs budget:write."
+  applyBudgetMove(proposalId: ID!): Proposal
+    @requiresScopes(scopes: [["budget:write"]])
+    @connect(
+      source: "ads"
+      http: { POST: "/proposals/{$args.proposalId}/apply" }
+      selection: "id status amount reason fromLineItemId toLineItemId"
+    )
+}

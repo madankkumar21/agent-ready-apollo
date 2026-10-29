@@ -1,0 +1,22 @@
+# Apollo MCP Server for the agent. Its only tools are the operation files in
+# ./operations. Introspection, execute, search and validate are all off, so the
+# agent cannot write its own queries. Every request carries the agent's token,
+# so the router applies the agent's scopes, not a service account's.
+endpoint: http://localhost:4000/
+transport:
+  type: streamable_http
+  address: 127.0.0.1
+  port: 8000
+operations:
+  source: local
+  paths:
+    - ./mcp/operations
+introspection:
+  introspect: { enabled: false }
+  execute: { enabled: false }
+  search: { enabled: false }
+  validate: { enabled: false }
+headers:
+  Authorization: "Bearer ${env.AGENT_TOKEN}"
+overrides:
+  mutation_mode: explicit

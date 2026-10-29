@@ -1,0 +1,16 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  graph-and-operations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Install Rover 1.0.1
+        run: |
+          curl -sSL https://rover.apollo.dev/nix/v1.0.1 | sh
+          echo "$HOME/.rover/bin" >> "$GITHUB_PATH"
+      - name: Compose, check operations, test
+        env:
+          APOLLO_ROVER_ALLOW_AUTOMATIC_DOWNLOAD: "true"
+        run: scripts/ci.sh

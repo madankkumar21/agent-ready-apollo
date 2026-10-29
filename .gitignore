@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.env
+auth/private.pem
+auth/*.jwt
+auth/jwks.json
+results/raw/
+scratch-gate/
+logs/

@@ -1,0 +1,16 @@
+# Delivery for every line item in a campaign: budget, spend, conversions and the segment it buys.
+query CampaignPerformance($campaignId: ID!) {
+  campaign(id: $campaignId) {
+    id
+    name
+    lineItems {
+      id
+      budget
+      spend
+      conversions
+      segment {
+        name
+      }
+    }
+  }
+}

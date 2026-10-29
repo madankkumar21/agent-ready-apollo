@@ -1,0 +1,26 @@
+# Media library: contextual segments and their tag definitions, mapped from its REST API.
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.11", import: ["@key"])
+  @link(url: "https://specs.apollo.dev/connect/v0.2", import: ["@source", "@connect"])
+  @source(name: "media", http: { baseURL: "http://127.0.0.1:4101" })
+
+type Tag {
+  id: ID!
+  label: String
+  modality: String
+  threshold: Float
+}
+
+type Segment @key(fields: "id")
+  @connect(
+    source: "media"
+    http: { GET: "/segments/{$this.id}" }
+    selection: "id name description status assetCount tags { id label modality threshold }"
+  ) {
+  id: ID!
+  name: String
+  description: String
+  status: String
+  assetCount: Int
+  tags: [Tag!]
+}

@@ -1,0 +1,9 @@
+# The account owner to notify about a campaign's proposal. Name only.
+query AccountOwner($campaignId: ID!) {
+  campaign(id: $campaignId) {
+    advertiser {
+      name
+      accountOwner
+    }
+  }
+}

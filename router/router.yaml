@@ -1,0 +1,14 @@
+# GraphOS Router config. JWT authentication and @requiresScopes are licensed
+# router features: they need APOLLO_KEY and APOLLO_GRAPH_REF from a GraphOS
+# account (the Free plan is enough). scripts/up.sh sets JWKS_URL.
+supergraph:
+  introspection: true          # for Sandbox while developing; the agent never reaches the router directly
+authentication:
+  router:
+    jwt:
+      jwks:
+        - url: "${env.JWKS_URL}"
+authorization:
+  require_authentication: true # no token, no data
+  directives:
+    enabled: true              # @requiresScopes: unauthorized fields come back null with an error

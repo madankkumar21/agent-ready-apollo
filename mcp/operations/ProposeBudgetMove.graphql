@@ -1,0 +1,8 @@
+# Record a proposal to move budget between two line items. Moves no money; a human applies it.
+mutation ProposeBudgetMove($campaignId: ID!, $fromLineItemId: ID!, $toLineItemId: ID!, $amount: Float!, $reason: String!) {
+  proposeBudgetMove(campaignId: $campaignId, fromLineItemId: $fromLineItemId, toLineItemId: $toLineItemId, amount: $amount, reason: $reason) {
+    id
+    status
+    amount
+  }
+}

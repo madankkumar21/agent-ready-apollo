@@ -1,0 +1,22 @@
+# CRM: advertisers. Contact details are PII and need the pii:read scope.
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.11", import: ["@key", "@requiresScopes"])
+  @link(url: "https://specs.apollo.dev/connect/v0.2", import: ["@source", "@connect"])
+  @source(name: "crm", http: { baseURL: "http://127.0.0.1:4103" })
+
+type Advertiser @key(fields: "id")
+  @connect(
+    source: "crm"
+    http: { GET: "/advertisers/{$this.id}" }
+    selection: "id name accountOwner contactName contactEmail contactPhone billingAddress contractValue notes"
+  ) {
+  id: ID!
+  name: String
+  accountOwner: String
+  contactName: String @requiresScopes(scopes: [["pii:read"]])
+  contactEmail: String @requiresScopes(scopes: [["pii:read"]])
+  contactPhone: String @requiresScopes(scopes: [["pii:read"]])
+  billingAddress: String @requiresScopes(scopes: [["pii:read"]])
+  contractValue: Int
+  notes: String
+}
