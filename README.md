@@ -18,7 +18,7 @@ A scripted agent makes the same calls a model would, so every number reproduces 
 | 4 | PII stays out of the model | 0 PII values reached the model. Called directly with the agent's token, the router returns the contact fields as `null` with `UNAUTHORIZED_FIELD_OR_TYPE`; the human's token gets them | A: 4 values. A′: 0, filtered in its code |
 | 5 | Writes need a human | No apply tool. Called directly with the agent's token, `applyBudgetMove` returns `data: null` with `UNAUTHORIZED_FIELD_OR_TYPE`, and the ads service never receives the call; the human's token applies it | A: the agent's `set_budget` call succeeded |
 | 6 | A schema change doesn't break the agent silently | A renamed field still composes; the CI check fails and names `CampaignPerformance` | n/a |
-| 7 | Switch off one capability now | Deleting `ProposeBudgetMove.graphql` removed the tool from the running server within about 2 s; restoring it brought it back within about 3 s | Edit and redeploy the server |
+| 7 | Switch off one capability now | Deleting `ProposeBudgetMove.graphql` removed the tool from the running server within about 3 s; restoring it brought it back within about 3 s (2.0–3.1 s across two runs) | Edit and redeploy the server |
 
 Token figures are estimates (characters ÷ 4, the same estimate the Apollo MCP Server prints for its own tools).
 

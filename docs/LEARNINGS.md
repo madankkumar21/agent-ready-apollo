@@ -29,7 +29,7 @@ The Apollo MCP Server loads an operation file without checking it against the sc
 
 ## 6. Keep a fast way to switch one capability off
 
-Deleting an operation file removed the tool from the running MCP server in about 2 seconds, with no restart. To stop an agent everywhere, revoke its token or its scopes at your identity provider.
+Deleting an operation file removed the tool from the running MCP server within about 3 seconds, with no restart. To stop an agent everywhere, revoke its token or its scopes at your identity provider.
 
 ## 7. Setting up GraphOS
 
