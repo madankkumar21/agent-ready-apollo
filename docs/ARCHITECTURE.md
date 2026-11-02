@@ -2,16 +2,9 @@
 
 ## The pieces
 
-```mermaid
-flowchart LR
-  agent([Agent]) -- "MCP: 3 tools" --> mcp[Apollo MCP Server 2.1.0<br/>tools = mcp/operations/*.graphql<br/>introspection off]
-  mcp -- "GraphQL + agent JWT" --> router[GraphOS Router 2.18.0<br/>JWT check · @requiresScopes<br/>query planning]
-  router -- "Connectors" --> ads[ads REST :4102]
-  router -- "Connectors" --> media[media REST :4101]
-  router -- "Connectors" --> crm[crm REST :4103]
-  human([Human approver]) -- "GraphQL + human JWT" --> router
-  idp[(Local IdP<br/>auth/tokens.py → JWKS)] -. "public keys" .-> router
-```
+![Architecture: agent, Apollo MCP Server, GraphOS Router, Connectors, REST services, baselines and CI](architecture.png)
+
+Blue is the Apollo path (steps 1–6), grey the two baselines, green the human token, orange what the router blocks for the agent, dashed the keys and license. Source: [architecture.svg](architecture.svg).
 
 Paths A and A′ (`baseline/`) are Python MCP servers that call the same three REST services directly.
 

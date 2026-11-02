@@ -32,6 +32,8 @@ Apollo announced [GraphOS Agent Services](https://www.apollographql.com/newsroom
 
 ## How it fits together
 
+![Architecture: agent, Apollo MCP Server, GraphOS Router, Connectors, REST services, baselines and CI](docs/architecture.png)
+
 The diagram, a step-by-step walkthrough of one request, the design decisions, the production path and where GraphQL is the wrong tool are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Who decided what, and what broke while building it: [docs/LEDGER.md](docs/LEDGER.md). What I would tell a team giving agents API access: [docs/LEARNINGS.md](docs/LEARNINGS.md).
 
 ## Layout
